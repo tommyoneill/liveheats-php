@@ -1,5 +1,5 @@
 {
-    "name": "tommyo/liveheats-php",
+    "name": "tommyoneill/liveheats-php",
     "description": "Liveheats GraphQL API client in PHP",
     "type": "library",
     "autoload": {
