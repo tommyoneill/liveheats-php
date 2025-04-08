@@ -1,0 +1,13 @@
+{
+    "name": "tommyo/liveheats-php",
+    "description": "Liveheats GraphQL API client in PHP",
+    "type": "library",
+    "autoload": {
+       "psr-4": {
+            "LiveHeats\\": "src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
+    }
+}
