@@ -9,6 +9,29 @@ $client = new GraphQLClient('https://liveheats.com/api/graphql');
 $service = new LiveHeatsService($client);
 
 try {
+
+    echo "\n🏅 Event Division Ranking (634403):\n";
+    print_r($service->getEventDivisionRanking(653583));
+    die();
+
+    $org = $service->getOrganisationByShortName('usasa');
+
+    foreach ($org["organisationByShortName"]["events"] as $event) {
+        echo "{$event['id']}, '{$event['name']}' , '{$event['date']}'\n" ;
+    }
+
+    //output a csv file
+    $csvFile = fopen('events.csv', 'w');
+    fputcsv($csvFile, ['ID', 'Name', 'Date']);
+    foreach ($org["organisationByShortName"]["events"] as $event) {
+        $mysqldate = date('Y-m-d H:i:s', strtotime($event['date']));
+        fputcsv($csvFile, [$event['id'], $event['name'], $mysqldate]);
+    }
+    fclose($csvFile);
+    echo "CSV file created: events.csv\n";
+
+    die();
+
     echo "\n🎯 Athlete Results in Series (Series: 39575, Division: 231238, Athlete: 1396662):\n";
     $results = $service->getAthleteSeriesResults(39575, 231238, 1396662);
 
@@ -25,12 +48,14 @@ try {
         echo "#{$rank['place']} - {$rank['athlete']['name']} ({$rank['points']} pts)\n";
     }
 
+    die();
+
     echo "\n📈 Series with Ranking Divisions (usasaums):\n";
     $series = $service->getSeriesWithRankingDivisions('usasaums');
     print_r($series);
     
     echo "\n🏅 Event Division Ranking (634403):\n";
-    print_r($service->getEventDivisionRanking(634403));
+    print_r($service->getEventDivisionRanking(653583));
 
     echo "\n📊 Event Division by ID (634403):\n";
     print_r($service->getEventDivisionById(634403));

@@ -297,4 +297,31 @@ class LiveHeatsService
 
         return $response['series']['athleteRankingResults'] ?? [];
     }
+    public function getEventDivisions($eventId)
+    {
+        $query = <<<'GRAPHQL'
+            query GetEventDetails($eventId: ID!) {
+            event(id: $eventId) {
+                id
+                name
+                eventDivisions {
+                id
+                status
+                entryCount
+                division {
+                    id
+                    name
+                }
+                }
+            }
+            }
+            GRAPHQL;
+
+        // Set up the variables for the query.
+        $variables = ['eventId' => $eventId];
+
+        return $this->client->query($query,  $variables);
+    }  
+
+    
 }
